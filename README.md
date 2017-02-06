@@ -3,7 +3,11 @@
 Box and Cox (1964) suggested a family of power transformations that reduces nonnormality of the error in a linear model. We illustrate the necessity and efficiency of Box Cox transformation using the R build-in dataset 'trees'
 
 ```
-## choose dataset
+## import libraries
+> library(MASS)
+> library(moments)
+
+## print data
 > trees
    Girth Height Volume
 1    8.3     70   10.3
@@ -39,23 +43,61 @@ Box and Cox (1964) suggested a family of power transformations that reduces nonn
 31  20.6     87   77.0
 
 ## run linear regression on original data
-> m <- lm(Volume ~ ., data = trees)
+> m <- lm(Volume ~ Height + Girth, data = trees)
 
-## Box Cox transformation
-bc <- boxcox(Volume ~ ., data = trees)
 
-## choose lambda
+## plot original residual distribution
+> plot(trees$Girth, rstandard(m))
+> par(mfrow = c(2, 1))
+> hist(m$resid)
+> qqnorm(m$resid)
+> qqline(m$resid)
+```
+![original resid dist](https://github.com/xinyix/Box-Cox-and-Durbin-Watson/blob/master/original.png?raw=true)
+We can see the original residual distribution is not entirely normal, to check this, we exam the skewness
+
+```
+> skewness(m$resid)
+[1] 0.3102985
+```
+
+This is evidence that the distribution is indeed somewhat skewed. So we perform Box Cox transformation to reduce non-normality in residuals
+
+```
+> bc <- boxcox(Volume ~ Height + Girth, data = trees)
+```
+
+We obtain a graph of log-likelihood of lambda, maximizing at a little less than 0.5, 
+![original resid dist](https://github.com/xinyix/Box-Cox-and-Durbin-Watson/blob/master/lambda.png?raw=true)
+To retrieve this lambda
+
+```
 > trans <- bc$x[which.max(bc$y)]
 > trans
 [1] 0.3030303
-
-## run linear regression on transformed data
-> mnew <- lm(y^trans ~ x)
-
-## plot Q-Q plots for the two models
-> op <- par(pty = "s", mfrow = c(1, 2))
-> qqnorm(m$residuals); qqline(m$residuals)
-> qqnorm(mnew$residuals); qqline(mnew$residuals)
-> par(op)
 ```
 
+Then run linear regression on the transformed data, and plot the residual distribution again
+
+```
+> mnew <- lm((Volume ^ trans) ~ Height + Girth, data = trees)
+> plot(trees$Girth, rstandard(mnew))
+> par(mfrow = c(2, 1))
+> hist(mnew$resid)
+> qqnorm(mnew$resid)
+> 
+> qqline(mnew$resid)
+> skewness(mnew$resid)
+[1] -0.0144304
+```
+
+![original resid dist](https://github.com/xinyix/Box-Cox-and-Durbin-Watson/blob/master/transformed.png?raw=true)
+
+We can see the residual distribution is in a more normal form, to confirm, we check its skewness again,
+
+```
+> skewness(mnew$resid)
+[1] -0.0144304
+```
+
+Now the skewness is close to 0, the transformation was successful.
