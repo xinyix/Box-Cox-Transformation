@@ -45,6 +45,9 @@ Box and Cox (1964) suggested a family of power transformations that reduces nonn
 ## run linear regression on original data
 > m <- lm(Volume ~ Height + Girth, data = trees)
 
+## original data adjusted R-squared
+> summary(m)$adj.r.squared
+[1] 0.9442322
 
 ## plot original residual distribution
 > plot(trees$Girth, rstandard(m))
@@ -54,7 +57,7 @@ Box and Cox (1964) suggested a family of power transformations that reduces nonn
 > qqline(m$resid)
 ```
 ![original resid dist](https://github.com/xinyix/Box-Cox-and-Durbin-Watson/blob/master/original.png?raw=true)
-We can see the original residual distribution is not entirely normal, to check this, we exam the skewness
+Adjusted R-squared measures how close the data are to the fitted regression line. Here we have adjusted R-square at 94%, which means the model explains most of the variability of the response data. However, we might be able to do better. We can see the original residual distribution is not entirely normal, to check this, we check its skewness
 
 ```
 > skewness(m$resid)
@@ -81,6 +84,11 @@ Then run linear regression on the transformed data, and plot the residual distri
 
 ```
 > mnew <- lm((Volume ^ trans) ~ Height + Girth, data = trees)
+
+## transformed data adjusted R-squared
+> summary(mnew)$adj.r.squared
+[1] 0.975946
+
 > plot(trees$Girth, rstandard(mnew))
 > par(mfrow = c(2, 1))
 > hist(mnew$resid)
@@ -100,4 +108,4 @@ We can see the residual distribution is in a more normal form, to confirm, we ch
 [1] -0.0144304
 ```
 
-Now the skewness is close to 0, the transformation was successful.
+Now the skewness is close to 0, and the adjusted R-squared is near 98%, the Box-Cox transformation reduced non-normality in the data and produces a better regression model. 
