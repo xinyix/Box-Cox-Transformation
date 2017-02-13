@@ -70,9 +70,9 @@ This is evidence that the distribution is indeed somewhat skewed. So we perform 
 > bc <- boxcox(Volume ~ Height + Girth, data = trees)
 ```
 
-We obtain a graph of log-likelihood of lambda, maximizing at a little less than 0.5, 
+We obtain a graph of log-likelihood of lambda,
 ![original resid dist](https://github.com/xinyix/Box-Cox-and-Durbin-Watson/blob/master/lambda.png?raw=true)
-To retrieve this lambda
+maximizing at a little less than 0.5, then the main term of transformation is y^1/2. To retrieve this lambda
 
 ```
 > trans <- bc$x[which.max(bc$y)]
