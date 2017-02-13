@@ -108,4 +108,4 @@ We can see the residual distribution is in a more normal form, to confirm, we ch
 [1] -0.0144304
 ```
 
-Now the skewness is close to 0, and the adjusted R-squared is near 98%, the Box-Cox transformation reduced non-normality in the data and produces a better regression model. 
+Now the skewness is close to 0, and the adjusted R-squared is near 98%, the Box-Cox transformation reduced non-normality in the data and lead to a better regression model. 
