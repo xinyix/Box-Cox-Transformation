@@ -187,6 +187,7 @@ F-statistic: 49.44 on 12 and 155 DF,  p-value: < 2.2e-16
 ![original resid dist](https://github.com/xinyix/Box-Cox-and-Durbin-Watson/blob/master/ts_fit.png?raw=true)
 
 Now we repeat the same process but this time with Box-Cox transformation activated
+
 ```
 ## fit a second linear model with Box-Cox transformation
 > lam <- BoxCox.lambda(birthstimeseries)
