@@ -187,9 +187,7 @@ F-statistic: 49.44 on 12 and 155 DF,  p-value: < 2.2e-16
 ![original resid dist](https://github.com/xinyix/Box-Cox-and-Durbin-Watson/blob/master/ts_fit.png?raw=true)
 
 Now we repeat the same process but this time with Box-Cox transformation activated
-
-```
-## fit a second linear model with Box-Cox transformation
+<pre><code>## fit a second linear model with Box-Cox transformation
 > lam <- BoxCox.lambda(birthstimeseries)
 > transfit <- tslm(birthstimeseries ~ trend + season, lambda = lam)
 > summary(transfit)
@@ -231,7 +229,7 @@ F-statistic: 1.238e+04 on 12 and 155 DF,  p-value: < 2.2e-16
 
 > skewness(transfit$resid)
 [1] 1.342264
-```
+</code></pre>
 ![original resid dist](https://github.com/xinyix/Box-Cox-and-Durbin-Watson/blob/master/ts_transfit.png?raw=true)
 The adjusted R-squared has increased from 78% to nearly 100% by adopting Box-Cox transformation, and the skewness of residual is reduced. Finally, we compare the leave-one-out cross-validatioin error of the two models
 
