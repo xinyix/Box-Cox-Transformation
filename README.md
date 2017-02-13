@@ -1,6 +1,6 @@
 ## Box-Cox Transformation
 
-### Non-Time Series Data
+### Non Time Series Data
 
 Box and Cox (1964) suggested a family of power transformations that reduces nonnormality of the error in a linear model. We illustrate the necessity and efficiency of Box Cox transformation using the R build-in dataset 'trees'
 
