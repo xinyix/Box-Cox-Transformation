@@ -232,5 +232,14 @@ F-statistic: 1.238e+04 on 12 and 155 DF,  p-value: < 2.2e-16
 [1] 1.342264
 ```
 ![original resid dist](https://github.com/xinyix/Box-Cox-and-Durbin-Watson/blob/master/ts_transfit.png?raw=true)
+The adjusted R-squared has increased from 78% to nearly 100% by adopting Box-Cox transformation, and the skewness of residual is reduced. Finally, we compare the leave-one-out cross-validatioin error of the two models
 
-
+```
+> CV(fit)
+        CV        AIC       AICc        BIC      AdjR2 
+ 1.3130924 45.0875410 47.8326390 88.8230367  0.7768344 
+> CV(transfit)
+           CV           AIC          AICc           BIC         AdjR2 
+ 5.257464e-03 -8.823457e+02 -8.796006e+02 -8.386102e+02  9.988769e-01 
+```
+It is obvious that the transformed model has much smaller CV error. 
